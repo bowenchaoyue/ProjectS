@@ -25,6 +25,6 @@ public class CategoryTest extends BaseTestController {
     @Test
     public void test2(){
         Category category = new Category();
-        List<Category> categories = categoryService.queryByPage(category);
+        categoryService.queryByPage(category);
     }
 }
