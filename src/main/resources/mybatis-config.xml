@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 实体类,简称 -设置别名 -->  
+    <typeAliases>  
+        <!--package name="com.iflytek.xtzk.**.domain"/-->
+        <typeAlias alias="messageVO" type="domain.vo.MessageVO"/>
+        <typeAlias alias="productVO" type="domain.vo.ProductVO"/>
+        <typeAlias alias="messageDTO" type="domain.dto.MessageDTO"/>
+        <typeAlias alias="productDTO" type="domain.dto.ProductDTO"/>
+    </typeAliases>
+
+   <plugins>
+    <!-- com.github.pagehelper为PageHelper类所在包名 -->
+    <plugin interceptor="com.github.pagehelper.PageHelper">
+     <property name="dialect" value="mysql"/>
+    </plugin>
+   </plugins>
+</configuration>

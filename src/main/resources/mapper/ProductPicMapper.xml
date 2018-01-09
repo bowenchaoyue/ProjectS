@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProductPicMapper">
+
+	<resultMap type="domain.ProductPic" id="baseResult">
+		<id column="id" property="id" jdbcType="BIGINT"></id>
+		<result column="product_id" property="productId" jdbcType="VARCHAR"></result>
+		<result column="pic_url" property="picurl" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="tableName">product_pic</sql>
+	<sql id="baseColumn">id,product_id,pic_url</sql>
+
+
+
+	<insert id="add" parameterType="java.util.List">
+		insert into <include refid="tableName"></include>
+		(product_id,pic_url)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.productId},#{item.picurl})
+		</foreach>
+	</insert>
+
+	<update id="delete" parameterType="domain.ProductPic">
+		DELETE FROM <include refid="tableName"/>
+		WHERE id = '-1'
+		<if test="id != null">
+			or id = #{id}
+		</if>
+		<if test="ids != null">
+			or  id in
+			<foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+		<if test="productId != null">
+			or product_id = #{productId}
+		</if>
+		<if test="productIds != null">
+			or product_id IN
+			<foreach collection="productIds" open="(" close=")" separator="," item="item">
+				#{item}
+			</foreach>
+		</if>
+	</update>
+
+	<select id="queryByCondition" parameterType="domain.ProductPic" resultMap="baseResult">
+		SELECT <include refid="baseColumn"/>
+		FROM <include refid="tableName"/>
+		WHERE 1=1
+		<if test="productId != null">
+			and product_id = #{productId}
+		</if>
+		<if test="ids != null">
+			and product_id in
+			<foreach collection="ids" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+</mapper>
