@@ -19,6 +19,8 @@ public interface ProductService {
      */
     PageInfo<ProductVO> queryByPage(ProductDTO dto);
 
+    ProductVO queryById(ProductDTO dto);
+
     /**
      * 删除商品
      * @param dto

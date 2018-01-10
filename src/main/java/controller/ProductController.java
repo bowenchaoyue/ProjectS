@@ -60,6 +60,38 @@ public class ProductController {
     //登录的
     //拦截的
 
+    /**
+     * 产品列表
+     * @param request
+     * @param productDTO
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/list",method = RequestMethod.POST)
+    public String getProductList(HttpServletRequest request,ProductDTO productDTO,ModelMap map){
+        //获取产品信息
+        PageInfo<ProductVO> pageInfo = productService.queryByPage(productDTO);
+        map.put("pageInfo",pageInfo);
+        return "productList";
+    }
+
+    /**
+     * 产品详情页面
+     * @param request
+     * @param id
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/detail")
+    public String getProductDetail(HttpServletRequest request,Long id,ModelMap map){
+        ProductDTO dto = new ProductDTO();
+        dto.setId(id);
+        ProductVO productVO = productService.queryById(dto);
+        map.put("product",productVO);
+        return "productDetail";
+    }
+
+
 
 
 }

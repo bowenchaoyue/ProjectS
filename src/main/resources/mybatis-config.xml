@@ -13,6 +13,7 @@
         <typeAlias alias="category" type="domain.Category"/>
         <typeAlias alias="dictionary" type="domain.Dictionary"/>
         <typeAlias alias="team" type="domain.Team"/>
+        <typeAlias alias="user" type="domain.User"/>
     </typeAliases>
 
    <plugins>

@@ -20,6 +20,8 @@ public interface ProductMapper {
      */
     int update(ProductDTO dto);
 
+    ProductVO queryById(ProductDTO dto);
+
     /**
      * 根据条件进行分页查询
      * @param dto

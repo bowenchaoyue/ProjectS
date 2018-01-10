@@ -63,6 +63,10 @@ public class ProductServiceImpl implements ProductService{
         return pageInfo;
     }
 
+    public ProductVO queryById(ProductDTO dto) {
+        return productMapper.queryById(dto);
+    }
+
     private void dealWithVOs(List<ProductVO> productVOS) {
         if (CollectionUtils.isEmpty(productVOS)){
             return;

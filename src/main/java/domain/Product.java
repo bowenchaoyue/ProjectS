@@ -25,6 +25,8 @@ public class Product extends BaseModel{
      */
     private String detail;
 
+    private Byte series;
+
     public String getName() {
         return name;
     }
@@ -63,5 +65,13 @@ public class Product extends BaseModel{
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Byte getSeries() {
+        return series;
+    }
+
+    public void setSeries(Byte series) {
+        this.series = series;
     }
 }

@@ -27,6 +27,8 @@ public class ProductDTO extends BaseModel{
      */
     private List<String> picurls;
 
+    private Byte series;
+
     public List<String> getPicurls() {
         return picurls;
     }
@@ -65,5 +67,13 @@ public class ProductDTO extends BaseModel{
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Byte getSeries() {
+        return series;
+    }
+
+    public void setSeries(Byte series) {
+        this.series = series;
     }
 }

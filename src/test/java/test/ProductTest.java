@@ -16,11 +16,13 @@ public class ProductTest extends BaseTestController {
 
     @Test
     public void test1(){
+        Byte series = 0;
         ProductDTO dto = new ProductDTO();
-        dto.setName("B产品");
+        dto.setName("C产品");
         dto.setDetail("本产品如何如何……");
         dto.setIntroduction("来自什么什么……");
         dto.setPrice(12.56);
+        dto.setSeries(series);
         List<String> strings = Lists.newArrayList();
         strings.add("http://abcdefgBBBB.jpg");
         strings.add("http://zdcssecBBBB.jpg");
@@ -30,12 +32,14 @@ public class ProductTest extends BaseTestController {
 
     @Test
     public void test2(){
+        Byte series = 2;
         ProductDTO dto = new ProductDTO();
-        dto.setId(5L);
-        dto.setName("B产品编辑一下");
+        dto.setId(7L);
+        dto.setName("C产品编辑一下");
         dto.setDetail("本产品如何如何……");
         dto.setIntroduction("来自什么什么……");
         dto.setPrice(12.56);
+        dto.setSeries(series);
         List<String> strings = Lists.newArrayList();
         strings.add("http://abcdefgBBBBbianji.jpg");
         strings.add("http://zdcssecBBBBbianji.jpg");
