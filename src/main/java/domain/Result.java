@@ -6,38 +6,38 @@ package domain;
  * @author Administrator
  *
  */
-public class ResponseMessage {
+public class Result {
 	private int resultCode;
 	private boolean success;
 	private Object data;
 	private String message;
 	
-	public ResponseMessage(boolean success){
+	public Result(boolean success){
 		this.success = success;
 		this.message = "";
 	}
-	public ResponseMessage(boolean success, String message){
+	public Result(boolean success, String message){
 		this.success = success;
 		this.message = message;
 	}
-	public ResponseMessage(int resultCode, boolean success, String message){
+	public Result(int resultCode, boolean success, String message){
 		this.resultCode = resultCode;
 		this.success = success;
 		this.message = message;
 	}
 
-	public static ResponseMessage error(String message) {
-		return new ResponseMessage(false, message);
+	public static Result error(String message) {
+		return new Result(false, message);
 	}
 
-	public static ResponseMessage success(String message) {
-		return new ResponseMessage(true, message);
+	public static Result success(String message) {
+		return new Result(true, message);
 	}
 
-	public static ResponseMessage success(String message, Object data) {
-		ResponseMessage responseMessage = new ResponseMessage(true, message);
-		responseMessage.setData(data);
-		return responseMessage;
+	public static Result success(String message, Object data) {
+		Result result = new Result(true, message);
+		result.setData(data);
+		return result;
 	}
 
 

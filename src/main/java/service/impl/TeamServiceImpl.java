@@ -21,6 +21,14 @@ public class TeamServiceImpl implements TeamService {
         return teamMapper.add(team);
     }
 
+    public int update(Team team) {
+        return teamMapper.update(team);
+    }
+
+    public int delete(Team team) {
+        return teamMapper.delete(team);
+    }
+
     public PageInfo<Team> queryByPage(Team team) {
         PageHelper.startPage(team.getPageNum(),team.getPageSize());
         List<Team> teams = teamMapper.queryByPage(team);

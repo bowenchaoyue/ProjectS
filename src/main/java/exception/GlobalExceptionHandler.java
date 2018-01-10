@@ -1,6 +1,6 @@
 package exception;
 
-import domain.ResponseMessage;
+import domain.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,23 +13,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    ResponseMessage handleBusinessException(BusinessException e){
-        ResponseMessage rs = new ResponseMessage(false);
+    Result handleBusinessException(BusinessException e){
+        Result rs = new Result(false);
         rs.setMessage(e.getMessage());
         return rs;
     }
 
 //    @ExceptionHandler(Exception.class)
 //    @ResponseBody
-//    ResponseMessage handleException(Exception e){
-//        ResponseMessage rs = new ResponseMessage(false);
+//    Result handleException(Exception e){
+//        Result rs = new Result(false);
 //        rs.setMessage("服务器内部错误，请联系管理员！");
 //        return rs;
 //    }
 //    @ExceptionHandler(Exception.class)
 //    @ResponseBody
-//    ResponseMessage handleException(Exception e){
-//        ResponseMessage rs = new ResponseMessage(false);
+//    Result handleException(Exception e){
+//        Result rs = new Result(false);
 //        rs.setMessage("服务器内部错误，请联系管理员！"+e.getMessage());
 //        return rs;
 //    }
