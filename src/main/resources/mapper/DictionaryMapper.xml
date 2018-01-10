@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DictionaryMapper">
+
+	<resultMap type="dictionary" id="baseResult">
+		<id column="id" property="id" jdbcType="BIGINT"></id>
+		<result column="k" property="key" jdbcType="VARCHAR"></result>
+		<result column="v" property="value" jdbcType="VARCHAR"></result>
+		<result column="delete_flag" property="deleteFlag" jdbcType="TINYINT"></result>
+	</resultMap>
+	
+	<sql id="tableName">dictionary</sql>
+	<sql id="baseColumn">id,k,v,delete_flag</sql>
+	<sql id="noIdColumn">k,v,delete_flag</sql>
+
+	<insert id="add" parameterType="dictionary">
+		insert into <include refid="tableName"></include>
+		(<include refid="noIdColumn"/>)
+		VALUES
+		(#{key},#{value},0)
+	</insert>
+
+	<update id="update" parameterType="dictionary">
+		  UPDATE <include refid="tableName"/>
+		  set k = #{key},v = #{value}
+		  WHERE  id = #{id}
+	</update>
+
+	<update id="delete" parameterType="dictionary">
+		UPDATE  <include refid="tableName"/>
+		set delete_flag = 1
+		WHERE delete_flag = 0
+		<if test="id != null">
+			AND id = #{id}
+		</if>
+		<if test="ids != null">
+			AND  id in
+			<foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+	</update>
+
+	<select id="queryByKey" parameterType="dictionary" resultMap="baseResult">
+		SELECT <include refid="baseColumn"/>
+		FROM <include refid="tableName"/>
+		WHERE delete_flag = 0
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="key != null and key != ''">
+			and k = #{key}
+		</if>
+	</select>
+</mapper>

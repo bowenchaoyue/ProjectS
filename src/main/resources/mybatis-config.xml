@@ -11,6 +11,7 @@
         <typeAlias alias="infomationVO" type="domain.vo.InfomationVO"/>
         <typeAlias alias="infomationDTO" type="domain.dto.InfomationDTO"/>
         <typeAlias alias="category" type="domain.Category"/>
+        <typeAlias alias="dictionary" type="domain.Dictionary"/>
     </typeAliases>
 
    <plugins>
