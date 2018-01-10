@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TeamMapper">
+
+	<resultMap type="team" id="baseResult">
+		<id column="id" property="id" jdbcType="BIGINT"></id>
+		<result column="name" property="name" jdbcType="VARCHAR"></result>
+		<result column="title" property="title" jdbcType="VARCHAR"></result>
+		<result column="profile" property="profile" jdbcType="VARCHAR"></result>
+		<result column="delete_flag" property="deleteFlag" jdbcType="TINYINT"></result>
+		<result column="create_id" property="createId" jdbcType="BIGINT"></result>
+		<result column="update_id" property="updateId" jdbcType="BIGINT"></result>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"></result>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="tableName">team</sql>
+	<sql id="baseColumn">id,name,title,profile,delete_flag,create_id,update_id,update_time,create_time</sql>
+	<sql id="noIdColumn">name,title,profile,delete_flag,create_id,update_id,update_time,create_time</sql>
+	<insert id="add" parameterType="team">
+		insert into <include refid="tableName"></include>
+		(<include refid="noIdColumn"/>)
+		VALUES
+		(#{name},#{title},#{profile},0,#{createId},#{updateId},now(),now())
+	</insert>
+
+	<update id="update" parameterType="team">
+		  UPDATE <include refid="tableName"/>
+		  set update_time = now()
+		  <if test="updateId != null">
+			  ,update_id = #{updateId}
+		  </if>
+		  <if test="name != null and name != ''">
+			  ,name = #{name}
+		  </if>
+		  <if test="title != null and title != ''">
+			  ,title = #{title}
+		  </if>
+		  <if test="profile != null and profile != ''">
+			  ,profile = #{profile}
+		  </if>
+		  <if test="deleteFlag != null">
+			  ,delete_flag = #{deleteFlag}
+		  </if>
+		WHERE  id = #{id}
+	</update>
+
+	<update id="delete" parameterType="team">
+		UPDATE  <include refid="tableName"/>
+		set delete_flag = 1
+		WHERE delete_flag = 0
+		<if test="id != null">
+			AND id = #{id}
+		</if>
+		<if test="ids != null">
+			AND  id in
+			<foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+	</update>
+
+	<select id="queryByPage" parameterType="team" resultMap="baseResult">
+		SELECT <include refid="baseColumn"/>
+		FROM <include refid="tableName"/>
+		WHERE delete_flag = 0
+		<if test="id != null">
+			and id = #{id}
+		</if>
+	</select>
+</mapper>
