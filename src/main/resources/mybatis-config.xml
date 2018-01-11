@@ -14,6 +14,7 @@
         <typeAlias alias="dictionary" type="domain.Dictionary"/>
         <typeAlias alias="team" type="domain.Team"/>
         <typeAlias alias="user" type="domain.User"/>
+        <typeAlias alias="cooperation" type="domain.Cooperation"/>
     </typeAliases>
 
    <plugins>

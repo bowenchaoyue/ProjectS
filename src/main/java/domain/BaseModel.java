@@ -3,6 +3,8 @@ package domain;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
@@ -116,5 +118,10 @@ public class BaseModel implements Serializable{
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public static void main(String[] args) throws UnknownHostException {
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        System.out.println(inetAddress.getHostAddress());
     }
 }

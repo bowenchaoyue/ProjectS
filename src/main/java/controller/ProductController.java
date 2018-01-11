@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import domain.Result;
 import domain.dto.ProductDTO;
 import domain.vo.ProductVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +18,14 @@ import service.ProductService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+
+    private static Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @Resource
     private ProductService productService;
@@ -90,8 +96,6 @@ public class ProductController {
         map.put("product",productVO);
         return "productDetail";
     }
-
-
 
 
 }
