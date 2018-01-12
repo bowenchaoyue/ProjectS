@@ -51,6 +51,8 @@
 </bean>
 
 
+    <!-- 静态资源的设置 -->
+    <mvc:default-servlet-handler/>
     <mvc:interceptors>
         <!-- 多个拦截器，顺序执行 -->
         <mvc:interceptor>

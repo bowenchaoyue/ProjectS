@@ -22,7 +22,7 @@ public class SeriesTest extends BaseTestController{
     @Test
     public void test1(){
         Series series = new Series();
-        List<Series> series1 = seriesService.queryByPage(series);
+        seriesService.queryByPage(series);
     }
 
 }

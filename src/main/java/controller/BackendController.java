@@ -62,12 +62,7 @@ public class BackendController extends BaseController {
      */
     @RequestMapping(value = "/doLogin",method = RequestMethod.POST)
     @ResponseBody
-    public Result doLogin(HttpServletRequest request,String name,String password,String code){
-        //验证验证码
-        Result result = checkValidcode(request, code);
-        if (result != null){
-            return result;
-        }
+    public Result doLogin(HttpServletRequest request,String name,String password){
         //验证用户
         User user = new User();
         user.setName(name);
