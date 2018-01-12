@@ -8,6 +8,7 @@
 		<result column="name" property="name" jdbcType="VARCHAR"></result>
 		<result column="title" property="title" jdbcType="VARCHAR"></result>
 		<result column="profile" property="profile" jdbcType="VARCHAR"></result>
+		<result column="pic" property="pic" jdbcType="VARCHAR"></result>
 		<result column="delete_flag" property="deleteFlag" jdbcType="TINYINT"></result>
 		<result column="create_id" property="createId" jdbcType="BIGINT"></result>
 		<result column="update_id" property="updateId" jdbcType="BIGINT"></result>
@@ -16,13 +17,13 @@
 	</resultMap>
 	
 	<sql id="tableName">team</sql>
-	<sql id="baseColumn">id,name,title,profile,delete_flag,create_id,update_id,update_time,create_time</sql>
-	<sql id="noIdColumn">name,title,profile,delete_flag,create_id,update_id,update_time,create_time</sql>
+	<sql id="baseColumn">id,name,title,profile,delete_flag,create_id,update_id,update_time,create_time,pic</sql>
+	<sql id="noIdColumn">name,title,profile,delete_flag,create_id,update_id,update_time,create_time,pic</sql>
 	<insert id="add" parameterType="team">
 		insert into <include refid="tableName"></include>
 		(<include refid="noIdColumn"/>)
 		VALUES
-		(#{name},#{title},#{profile},0,#{createId},#{updateId},now(),now())
+		(#{name},#{title},#{profile},0,#{createId},#{updateId},now(),now(),#{pic})
 	</insert>
 
 	<update id="update" parameterType="team">

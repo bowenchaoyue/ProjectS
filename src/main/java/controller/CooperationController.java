@@ -1,28 +1,43 @@
 package controller;
 
 
+import com.github.pagehelper.PageInfo;
+import domain.Cooperation;
+import domain.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import service.CooperationService;
+
+import javax.annotation.Resource;
 
 @RequestMapping("/cooperation")
 @Controller
 public class CooperationController {
 
+    @Resource
+    private CooperationService cooperationService;
+
     @RequestMapping("/index")
-    public String toCooperationIndex(){
-        //todo 查询合作伙伴相关的信息
-        return "cooperation/index";
+    @ResponseBody
+    public Result toCooperationIndex(Cooperation cooperation){
+        PageInfo<Cooperation> pageInfo = cooperationService.queryByPage(cooperation);
+        return new Result(true,pageInfo);
     }
 
     @RequestMapping("/list")
-    public String toCooperationList(){
-        //todo 查询合作伙伴相关的信息
-        return "cooperaton/list";
+    @ResponseBody
+    public Result toCooperationList(Cooperation cooperation){
+        PageInfo<Cooperation> pageInfo = cooperationService.queryByPage(cooperation);
+        return new Result(true,pageInfo);
     }
 
     @RequestMapping("/detail")
-    public String toCooperationDetail(){
-        //todo 查询合作伙伴详情信息
-        return "cooperation/detail";
+    @ResponseBody
+    public Result toCooperationDetail(Long id){
+        Cooperation cooperation = new Cooperation();
+        cooperation.setId(id);
+        Cooperation query = cooperationService.queryById(cooperation);
+        return  new Result(true,query);
     }
 }

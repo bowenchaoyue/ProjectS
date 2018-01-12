@@ -117,8 +117,5 @@ public class BaseModel implements Serializable{
         this.updateTime = updateTime;
     }
 
-    public static void main(String[] args) throws UnknownHostException {
-        InetAddress inetAddress = InetAddress.getLocalHost();
-        System.out.println(inetAddress.getHostAddress());
-    }
+
 }

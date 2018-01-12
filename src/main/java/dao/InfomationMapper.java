@@ -27,6 +27,8 @@ public interface InfomationMapper {
      */
     List<InfomationVO> queryByPage(InfomationDTO dto);
 
+    InfomationVO queryById(Long id);
+
     /**
      *删除资讯
      */

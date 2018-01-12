@@ -32,4 +32,6 @@ public interface CooperationMapper {
      * @return
      */
     List<Cooperation> queryByPage(Cooperation cooperation);
+
+    Cooperation queryById(Cooperation cooperation);
 }

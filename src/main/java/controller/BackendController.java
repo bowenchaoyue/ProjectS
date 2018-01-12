@@ -34,18 +34,12 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/backend")
-public class BackendController {
+public class BackendController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BackendController.class);
 
     @Resource
     private UserService userService;
-
-    //记录用户的验证码
-    private Map<String,String> keyCodeMap = Maps.newConcurrentMap();
-    //记录验证码创建时间
-    private Map<String,Date> validCodeTimeMap = Maps.newConcurrentMap();
-
     /**
      * 登录页面
      * @return
@@ -53,36 +47,6 @@ public class BackendController {
     @RequestMapping("/login")
     public String toLogin(){
         return "login";
-    }
-
-
-    @RequestMapping("/login/getValidateCode")
-    public void getValidateCode(HttpServletRequest req,HttpServletResponse resp) throws IOException {
-        //获取验证码信息
-        ValidateCodeReturn validateCode = ValidateCodeUtils.getValidateCode(80, 30, 4, new Color(242, 242, 242));
-        //生成获取验证码的key保存到cookie中
-        String validateCodeKey = CipherUtils.MD5Encode(UUID.randomUUID().toString());
-        //移除之前的cookie值
-        Cookie oldCookie = CookieUtils.getCookie(CookieNameConstant.VALIDATE_CODE, req);
-        String path = "/";
-        CookieUtils.deleteCookie(oldCookie,resp,null,path);
-        //保存到cookie
-        Cookie cookie = new Cookie(CookieNameConstant.VALIDATE_CODE,validateCodeKey);
-        cookie.setPath("/");
-        resp.addCookie(cookie);
-        keyCodeMap.put(validateCodeKey,validateCode.getValidateCode());
-
-        logger.debug("***validCode***："+validateCode.getValidateCode());
-
-        validCodeTimeMap.put(validateCode.getValidateCode(),new Date());
-        resp.setHeader("Pragma", "no-cache");
-        resp.setHeader("Cache-Control", "no-cache");
-        resp.setDateHeader("Expires", 0);
-        resp.setContentType("image/jpeg");
-        // 将图像输出到Servlet输出流中。
-        ServletOutputStream sos = resp.getOutputStream();
-        ImageIO.write(validateCode.getValidateCodeImg(), "jpeg", sos);
-        sos.close();
     }
 
     /**
@@ -94,38 +58,12 @@ public class BackendController {
     @RequestMapping(value = "/doLogin",method = RequestMethod.POST)
     @ResponseBody
     public Result doLogin(HttpServletRequest request,String name,String password,String code){
-        // 获取cookie
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-//            log.error("登录校验获取验证码COOKIE信息失败，用户名【" + backendOperatorDTO.getUserName() + "】");
-            return new Result(-1,false,"获取验证码失败");
+        //验证验证码
+        Result result = checkValidcode(request, code);
+        if (result != null){
+            return result;
         }
-        // 获取cookie中的验证码KEY
-        String validateCodeKey = "";
-        for (Cookie cookie : cookies) {
-            // 找到匹配的COOKIE信息
-            if (CookieNameConstant.VALIDATE_CODE.equals(cookie.getName())) {
-                validateCodeKey = cookie.getValue();
-            }
-        }
-        if (validateCodeKey == "") {
-//            log.error("登录校验获取验证码COOKIE信息失败，用户名【" + backendOperatorDTO.getUserName() + "】");
-                 return new Result(-1,false,"获取验证码失败");
-        }
-        // 去keyCodeMap中查找验证码
-//        String validateCode = redisUtils.get(validateCodeKey);
-           String validateCode = keyCodeMap.get(validateCodeKey);
-           Date date = validCodeTimeMap.get(validateCode);
-           if(date == null || validate(date)){
-               return new Result(-1,false,"获取验证码失败");
-           }
-           //删除记录
-           keyCodeMap.remove(validateCodeKey);
-           validCodeTimeMap.remove(validateCode);
-           if (!validateCode.equals(code)){
-               return new Result(-1,false,"验证码错误");
-           }
-
+        //验证用户
         User user = new User();
         user.setName(name);
         User login = userService.login(user);

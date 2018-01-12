@@ -31,4 +31,6 @@ public interface CooperationService {
      * @return
      */
     PageInfo<Cooperation> queryByPage(Cooperation cooperation);
+
+    Cooperation queryById(Cooperation cooperation);
 }

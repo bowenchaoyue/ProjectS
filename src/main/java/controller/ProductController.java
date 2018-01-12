@@ -48,6 +48,21 @@ public class ProductController {
     }
 
 
+    @RequestMapping("/list")
+    public Result toInfomationList(ProductDTO dto){
+        PageInfo<ProductVO> pageInfo = productService.queryByPage(dto);
+        return new Result(true,pageInfo);
+    }
+
+    @RequestMapping("/detail")
+    public Result toInfomationDetail(Long id){
+        ProductDTO dto = new ProductDTO();
+        dto.setId(id);
+        ProductVO productVO = productService.queryById(dto);
+        return new Result(true,productVO);
+    }
+
+
     /**
      * 上传图片的
      * @param file

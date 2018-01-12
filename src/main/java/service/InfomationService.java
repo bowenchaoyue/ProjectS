@@ -19,6 +19,8 @@ public interface InfomationService {
      */
     PageInfo<InfomationVO> queryByPage(InfomationDTO dto);
 
+    InfomationVO queryById(Long id);
+
     /**
      * 更新资讯
      * @param dto

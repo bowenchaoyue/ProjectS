@@ -42,4 +42,9 @@ public class InfomationTest extends BaseTestController {
         infomationService.delete(dto);
 
     }
+
+    @Test
+    public void test4(){
+        infomationService.queryById(3L)
+    }
 }

@@ -4,6 +4,7 @@ public class Team extends BaseModel{
     private String name;
     private String title;
     private String profile;
+    private String pic;
 
     public String getName() {
         return name;
@@ -27,5 +28,13 @@ public class Team extends BaseModel{
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }

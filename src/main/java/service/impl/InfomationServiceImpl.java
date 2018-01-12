@@ -31,6 +31,10 @@ public class InfomationServiceImpl implements InfomationService {
         return pageInfo;
     }
 
+    public InfomationVO queryById(Long id) {
+        return infomationMapper.queryById(id);
+    }
+
     public int update(InfomationDTO dto) {
         return infomationMapper.update(dto);
     }

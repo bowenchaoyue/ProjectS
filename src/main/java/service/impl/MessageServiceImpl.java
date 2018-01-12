@@ -3,6 +3,7 @@ package service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import dao.MessageMapper;
+import domain.Result;
 import domain.dto.MessageDTO;
 import domain.vo.MessageVO;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,9 @@ public class MessageServiceImpl implements MessageService {
      * @param dto
      * @return
      */
-    public int add(MessageDTO dto) {
-        return messageMapper.add(dto);
+    public Result add(MessageDTO dto) {
+        int result = messageMapper.add(dto);
+        return new Result(true);
     }
 
     /**

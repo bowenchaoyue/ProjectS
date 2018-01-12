@@ -81,4 +81,10 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="queryById" parameterType="cooperation" resultMap="baseResult">
+		SELECT <include refid="baseColumn"/>
+		FROM <include refid="tableName"/>
+		WHERE id = #{id}
+	</select>
 </mapper>

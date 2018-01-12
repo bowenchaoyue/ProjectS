@@ -34,4 +34,8 @@ public class CooperationImpl implements CooperationService {
         PageInfo<Cooperation> pageInfo = new PageInfo<Cooperation>(cooperations);
         return pageInfo;
     }
+
+    public Cooperation queryById(Cooperation cooperation) {
+        return cooperationMapper.queryById(cooperation);
+    }
 }
