@@ -1,7 +1,9 @@
 package controller;
 
 import com.github.pagehelper.PageInfo;
+import domain.Category;
 import domain.Result;
+import domain.Series;
 import domain.dto.ProductDTO;
 import domain.vo.ProductVO;
 import org.slf4j.Logger;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import service.ProductService;
+import service.SeriesService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/product")
@@ -29,6 +33,9 @@ public class ProductController {
 
     @Resource
     private ProductService productService;
+
+    @Resource
+    private SeriesService seriesService;
 
     /**
      * 上传图片的
@@ -75,5 +82,18 @@ public class ProductController {
         dto.setId(id);
         ProductVO productVO = productService.queryById(dto);
         return new Result(true,productVO);
+    }
+
+
+    /**
+     * 获取产品系列
+     * @return
+     */
+    @RequestMapping("/getSeries")
+    @ResponseBody
+    public Result getCategory(){
+        Series series = new Series();
+        List<Series> categories = seriesService.queryByPage(series);
+        return new Result(true,categories);
     }
 }

@@ -16,6 +16,7 @@
         <typeAlias alias="user" type="domain.User"/>
         <typeAlias alias="cooperation" type="domain.Cooperation"/>
         <typeAlias alias="picture" type="domain.Picture"/>
+        <typeAlias alias="series" type="domain.Series"/>
     </typeAliases>
 
    <plugins>
