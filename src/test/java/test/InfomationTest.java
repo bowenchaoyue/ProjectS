@@ -45,6 +45,6 @@ public class InfomationTest extends BaseTestController {
 
     @Test
     public void test4(){
-        infomationService.queryById(3L)
+        infomationService.queryById(3L);
     }
 }

@@ -1,9 +1,7 @@
 package controller;
 
 import com.google.common.collect.Maps;
-import domain.CookieNameConstant;
-import domain.Result;
-import domain.ValidateCodeReturn;
+import domain.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,7 +138,9 @@ public class BaseController {
         return new Date().getTime() - date.getTime()>60*1000;
     }
 
-
+    public User getUser(HttpServletRequest request){
+        return (User)request.getSession().getAttribute(Constants.SESSION_KEY);
+    }
 
 
 

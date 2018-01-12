@@ -31,39 +31,6 @@ public class ProductController {
     private ProductService productService;
 
     /**
-     * 到产品首页
-     * @param map
-     * @return
-     */
-    @RequestMapping("/index")
-    public String toProductPage(ModelMap map){
-
-        ProductDTO dto = new ProductDTO();
-        dto.setPageNum(1);
-        dto.setPageSize(5);
-        PageInfo<ProductVO> pageInfo = productService.queryByPage(dto);
-
-        map.put("pageInfo",pageInfo);
-        return "product";
-    }
-
-
-    @RequestMapping("/list")
-    public Result toInfomationList(ProductDTO dto){
-        PageInfo<ProductVO> pageInfo = productService.queryByPage(dto);
-        return new Result(true,pageInfo);
-    }
-
-    @RequestMapping("/detail")
-    public Result toInfomationDetail(Long id){
-        ProductDTO dto = new ProductDTO();
-        dto.setId(id);
-        ProductVO productVO = productService.queryById(dto);
-        return new Result(true,productVO);
-    }
-
-
-    /**
      * 上传图片的
      * @param file
      * @param request
@@ -85,32 +52,28 @@ public class ProductController {
      * 产品列表
      * @param request
      * @param productDTO
-     * @param map
      * @return
      */
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    public String getProductList(HttpServletRequest request,ProductDTO productDTO,ModelMap map){
+    @ResponseBody
+    public Result getProductList(HttpServletRequest request,ProductDTO productDTO){
         //获取产品信息
         PageInfo<ProductVO> pageInfo = productService.queryByPage(productDTO);
-        map.put("pageInfo",pageInfo);
-        return "productList";
+        return new Result(true,pageInfo);
     }
 
     /**
      * 产品详情页面
      * @param request
      * @param id
-     * @param map
      * @return
      */
     @RequestMapping(value = "/detail")
-    public String getProductDetail(HttpServletRequest request,Long id,ModelMap map){
+    @ResponseBody
+    public Result getProductDetail(HttpServletRequest request,Long id){
         ProductDTO dto = new ProductDTO();
         dto.setId(id);
         ProductVO productVO = productService.queryById(dto);
-        map.put("product",productVO);
-        return "productDetail";
+        return new Result(true,productVO);
     }
-
-
 }

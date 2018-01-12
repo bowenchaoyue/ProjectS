@@ -1,8 +1,12 @@
 package controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import domain.*;
+import jodd.datetime.JDateTime;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import service.PictureService;
 import service.UserService;
-import utils.CipherUtils;
-import utils.CookieUtils;
-import utils.MD5Util;
-import utils.ValidateCodeUtils;
+import utils.*;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -40,13 +42,16 @@ public class BackendController extends BaseController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private PictureService pictureService;
     /**
      * 登录页面
      * @return
      */
     @RequestMapping("/login")
     public String toLogin(){
-        return "login";
+        return "first";
     }
 
     /**
@@ -110,77 +115,21 @@ public class BackendController extends BaseController {
 
 
     /**
-     * 上传图片到图片空间
-     */
-//    @RequestMapping(value = "/pic/doUpload")
-//    @ResponseBody
-//    public Result doUpload(MultipartFile myfile, HttpServletRequest request, HttpServletResponse response, String type,
-//                           String catalogId, @CookieValue(value="t_zallgo-web", defaultValue="") String token) {
-//        Result rs = new Result();
-//        try {
-//            StringBuffer contentType = new StringBuffer("image/");
-//            myfile.transferTo(new File(myfile.getOriginalFilename()));
-//            File one = new File(myfile.getOriginalFilename());
-//            FilePart fp = new FilePart("myfile", one);
-//            PostMethod filePost = new PostMethod("http://piccenter.zallgo.com/pic/upload");
-//            fp.setContentType(contentType.append(this.getExtensionName(one.getPath())).toString());
-//            Part[] parts = { fp, new StringPart("token", token),
-//                    new StringPart("ut", String.valueOf(PicRoomFacadeService.USER_TYPE_FRONT)),
-//                    new StringPart("groupId", catalogId), new StringPart("type", type) };
-//            // 对于MIME类型的请求，httpclient建议全用MulitPartRequestEntity进行包装
-//            MultipartRequestEntity mre = new MultipartRequestEntity(parts, filePost.getParams());
-//            filePost.setRequestEntity(mre);
-//            HttpClient client = new HttpClient();
-//            client.getHttpConnectionManager().getParams().setConnectionTimeout(30000);// 设置连接时间
-//            int status = client.executeMethod(filePost);
-//            if (status == HttpStatus.SC_OK) {
-//                Map<String, Object> resultMap = JsonUtils.fromJson(filePost.getResponseBodyAsString(), Map.class);
-//                if (resultMap.containsKey("state") && Integer.valueOf(resultMap.get("state").toString()) == 1) {
-//                    Map data = (Map) resultMap.get("data");
-//                    if (null != data) {
-//                        Map picResponse = (Map) data.get("picResponse");
-//                        if (picResponse == null) {
-//                            rs.setState(0);
-//                            rs.setSuccess(false);
-//                            rs.setMessage("图片上传失败");
-//                        } else {
-//                            String url = picResponse.get("url").toString();
-//                            String pid = picResponse.get("picRoomId").toString();
-//                            Map<String, String> result = new HashMap<String, String>();
-//                            result.put("url", url);
-//                            result.put("pid", pid);
-//                            rs.addAttribute("pic", result);
-//                        }
-//                    }
-//                } else {
-//                    rs.setState(0);
-//                    rs.setSuccess(false);
-//                    rs.setMessage(resultMap.get("message").toString());
-//                }
-//            } else {
-//                rs.setState(0);
-//                rs.setSuccess(false);
-//                rs.setMessage("图片上传失败");
-//            }
-//        } catch (Exception e) {
-//            rs.setState(0);
-//            rs.setSuccess(false);
-//            rs.setMessage("图片上传失败");
-//        }
-//        return rs;
-//    }
-
-
-    /**
      * 单文件上传
      * @param file
      * @param req
      * @return
      */
-    @RequestMapping("fileUpload")
+    @RequestMapping(value = "/fileUpload",method = RequestMethod.POST)
     @ResponseBody
-    public Result fileUpload(@RequestParam("file") MultipartFile file,HttpServletRequest req){
-        String filePath = saveFile(file, req);
+    public Result fileUpload(@RequestParam("file") MultipartFile file,Byte type,HttpServletRequest req){
+
+        //模拟登陆
+        User user = new User();
+        user.setId(1L);
+        req.getSession().setAttribute(Constants.SESSION_KEY,user);
+        //模拟登陆
+        String filePath = saveFile(file,type, req);
         Map<String,String> filePathMap = Maps.newHashMap();
         filePathMap.put(file.getOriginalFilename(),filePath);
         return new Result(true,filePathMap);
@@ -194,7 +143,8 @@ public class BackendController extends BaseController {
      */
     @RequestMapping("filesUpload")
     @ResponseBody
-    public Result filesUpload(@RequestParam("files") MultipartFile[] files, HttpServletRequest req) {
+    public Result filesUpload(@RequestParam("files") MultipartFile[] files,Byte type, HttpServletRequest req) {
+
         //判断file数组不能为空并且长度大于0
         Map<String,String> filePathMap = Maps.newHashMap();
         if(files!=null&&files.length>0){
@@ -202,7 +152,7 @@ public class BackendController extends BaseController {
             for(int i = 0;i<files.length;i++){
                 MultipartFile file = files[i];
                 //保存文件
-                String filePath = saveFile(file, req);
+                String filePath = saveFile(file,type,req);
                 if(filePath != null){
                     filePathMap.put(file.getOriginalFilename(),filePath);
                 }
@@ -212,21 +162,44 @@ public class BackendController extends BaseController {
         return new Result(true,filePathMap);
     }
 
-    private String saveFile(MultipartFile file,HttpServletRequest request) {
+    private String saveFile(MultipartFile file,Byte type,HttpServletRequest request) {
         // 判断文件是否为空
         if (!file.isEmpty()) {
             try {
                 // 文件保存路径
-                String filePath = request.getSession().getServletContext().getRealPath("/") + "upload/"
-                        + file.getOriginalFilename();
+                String timeStr = new JDateTime().toString("YYYYMMDDhhmmss");
+                String dirStr = new JDateTime().toString("ss");
+                String filedir = StoreHelper.getPicStorePath()+dirStr;
+                if (!new File(filedir).exists()){
+                    new File(filedir).mkdirs();
+                }
+                String filePath = filedir+File.separator+timeStr+file.getOriginalFilename();
                 // 转存文件
                 file.transferTo(new File(filePath));
-                return filePath;
+                String urlPath = IpUtil.getHttpAddress()+File.separator+dirStr+File.separator+timeStr+file.getOriginalFilename();
+                //保存到图片表里
+                Picture picture = new Picture();
+                picture.setType(type);
+                picture.setPicUrl(urlPath);
+                picture.setCreateId(getUser(request).getId());
+                pictureService.add(picture);
+                return urlPath;
             } catch (Exception e) {
                 logger.error(file.getOriginalFilename()+"上传失败！");
             }
         }
         return null;
+    }
+
+    /**
+     * 获取图片接口
+     * @return
+     */
+    @RequestMapping(value = "/getPics",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getPics(Picture picture){
+        PageInfo<Picture> pageInfo = pictureService.queryByPage(picture);
+        return new Result(true,pageInfo);
     }
 
 
