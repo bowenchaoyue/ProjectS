@@ -14,10 +14,10 @@ public class BaseModel implements Serializable{
     private Long id;//主键
     private List<Long> ids;
 
-    private String createId;//创建人
+    private Long createId;//创建人
     private Date createTime;//创建时间
 
-    private String updateId;//修改人
+    private Long updateId;//修改人
     private Date updateTime;//修改时间
 
     private Byte deleteFlag;//是否删除
@@ -40,13 +40,6 @@ public class BaseModel implements Serializable{
         this.createTime = createTime;
     }
 
-    public String getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(String createId) {
-        this.createId = createId;
-    }
 
     public Integer getPageNum() {
         return pageNum;
@@ -104,11 +97,15 @@ public class BaseModel implements Serializable{
         this.ids = ids;
     }
 
-    public String getUpdateId() {
+    public void setCreateId(Long createId) {
+        this.createId = createId;
+    }
+
+    public Long getUpdateId() {
         return updateId;
     }
 
-    public void setUpdateId(String updateId) {
+    public void setUpdateId(Long updateId) {
         this.updateId = updateId;
     }
 
