@@ -11,14 +11,14 @@ import service.CooperationService;
 
 import javax.annotation.Resource;
 
-@RequestMapping("/cooperation")
+@RequestMapping("/english/cooperation")
 @Controller
-public class CooperationController {
+public class CooperationEController {
 
     @Resource
     private CooperationService cooperationService;
 
-    private Byte CHINESE = 0;
+    private Byte ENGLISH = 1;
 
     @RequestMapping("/index")
     @ResponseBody
@@ -30,7 +30,7 @@ public class CooperationController {
     @RequestMapping("/list")
     @ResponseBody
     public Result toCooperationList(Cooperation cooperation){
-        cooperation.setLang(CHINESE);
+        cooperation.setLang(ENGLISH);
         PageInfo<Cooperation> pageInfo = cooperationService.queryByPage(cooperation);
         return new Result(true,pageInfo);
     }

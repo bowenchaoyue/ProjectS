@@ -37,7 +37,7 @@
     <div class="footer"></div>
 </div>
 
-<script type="text/javascript" src="../../js/jQuery.js"></script>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/fun.base.js"></script>
 <script type="text/javascript" src="../../js/script.js"></script>
 <script type="text/javascript" src="../../js/login.js"></script>

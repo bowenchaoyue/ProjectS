@@ -4,7 +4,7 @@ $(function () {
         var password = $("#value_2").val().trim();
         $.post('../backend/doLogin',{name:name,password:password},function (rs) {
             if(rs.success){
-                alert("success");
+               window.location.href="../backend/index.do";
             }else {
                 alert("failed");
             }

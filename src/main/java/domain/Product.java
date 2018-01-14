@@ -27,6 +27,8 @@ public class Product extends BaseModel{
 
     private Byte series;
 
+    private Byte lang;
+
     public String getName() {
         return name;
     }
@@ -73,5 +75,13 @@ public class Product extends BaseModel{
 
     public void setSeries(Byte series) {
         this.series = series;
+    }
+
+    public Byte getLang() {
+        return lang;
+    }
+
+    public void setLang(Byte lang) {
+        this.lang = lang;
     }
 }

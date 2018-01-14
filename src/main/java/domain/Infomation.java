@@ -32,6 +32,11 @@ public class Infomation  extends BaseModel{
 
     private Long categoryId;
 
+    private Byte lang;
+
+    private String picurl;
+
+
     public String getAuthor() {
         return author;
     }
@@ -94,5 +99,21 @@ public class Infomation  extends BaseModel{
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Byte getLang() {
+        return lang;
+    }
+
+    public void setLang(Byte lang) {
+        this.lang = lang;
+    }
+
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
     }
 }

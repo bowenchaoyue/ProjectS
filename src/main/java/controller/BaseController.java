@@ -77,7 +77,7 @@ public class BaseController {
         //移除之前的cookie值
         Cookie oldCookie = CookieUtils.getCookie(CookieNameConstant.VALIDATE_CODE, req);
         String path = "/";
-        CookieUtils.deleteCookie(oldCookie,resp,null,path);
+        CookieUtils.deleteCookie(oldCookie,resp,"",path);
         //保存到cookie
         Cookie cookie = new Cookie(CookieNameConstant.VALIDATE_CODE,validateCodeKey);
         cookie.setPath("/");
@@ -127,7 +127,7 @@ public class BaseController {
         //删除记录
         keyCodeMap.remove(validateCodeKey);
         validCodeTimeMap.remove(validateCode);
-        if (!validateCode.equals(code)){
+        if (!validateCode.equals(code.toUpperCase())){
             return new Result(-1,false,"验证码错误");
         }else {
             return null;
@@ -140,6 +140,12 @@ public class BaseController {
 
     public User getUser(HttpServletRequest request){
         return (User)request.getSession().getAttribute(Constants.SESSION_KEY);
+    }
+
+    public void dealWithDTO(HttpServletRequest request, BaseModel dto) {
+        User user = getUser(request);
+        dto.setCreateId(user.getId());
+        dto.setUpdateId(user.getId());
     }
 
 

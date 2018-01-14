@@ -34,6 +34,10 @@ public class InfomationDTO extends BaseModel {
      */
     private String content;
 
+    private Byte lang;
+
+    private String picurl;
+
     public String getAuthor() {
         return author;
     }
@@ -96,5 +100,21 @@ public class InfomationDTO extends BaseModel {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public Byte getLang() {
+        return lang;
+    }
+
+    public void setLang(Byte lang) {
+        this.lang = lang;
+    }
+
+    public String getPicurl() {
+        return picurl;
+    }
+
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
     }
 }

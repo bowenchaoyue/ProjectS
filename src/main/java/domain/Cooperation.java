@@ -16,6 +16,8 @@ public class Cooperation extends BaseModel{
 
     private String content;
 
+    private Byte lang;
+
     public String getName() {
         return name;
     }
@@ -46,5 +48,13 @@ public class Cooperation extends BaseModel{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Byte getLang() {
+        return lang;
+    }
+
+    public void setLang(Byte lang) {
+        this.lang = lang;
     }
 }

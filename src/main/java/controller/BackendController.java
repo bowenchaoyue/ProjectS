@@ -4,17 +4,17 @@ package controller;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import domain.*;
+import domain.dto.MessageDTO;
+import domain.vo.MessageVO;
 import jodd.datetime.JDateTime;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import service.MessageService;
 import service.PictureService;
 import service.UserService;
 import utils.*;
@@ -45,13 +45,16 @@ public class BackendController extends BaseController {
 
     @Resource
     private PictureService pictureService;
+
+    @Resource
+    private MessageService messageService;
     /**
-     * 登录页面
+     * 登录后的首页
      * @return
      */
-    @RequestMapping("/login")
+    @RequestMapping("/index.do")
     public String toLogin(){
-        return "first";
+        return "backend";
     }
 
     /**
@@ -197,6 +200,17 @@ public class BackendController extends BaseController {
         return new Result(true,pageInfo);
     }
 
+
+    /**
+     * 获取留言接口
+     * @return
+     */
+    @RequestMapping(value = "/getMessages",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getMessages(@RequestBody MessageDTO dto){
+        PageInfo<MessageVO> pageInfo = messageService.queryByPage(dto);
+        return new Result(true,pageInfo);
+    }
 
 
 

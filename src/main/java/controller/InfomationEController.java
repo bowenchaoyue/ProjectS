@@ -1,9 +1,7 @@
 package controller;
 
 import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.regexp.internal.RE;
 import domain.Category;
-import domain.Message;
 import domain.Result;
 import domain.dto.InfomationDTO;
 import domain.dto.MessageDTO;
@@ -11,7 +9,6 @@ import domain.vo.InfomationVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.CategoryService;
 import service.InfomationService;
@@ -22,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/infomation")
-public class InfomationController extends BaseController{
+@RequestMapping("/english/infomation")
+public class InfomationEController extends BaseController{
 
     @Resource
     private InfomationService infomationService;
@@ -34,56 +31,40 @@ public class InfomationController extends BaseController{
     @Resource
     private CategoryService categoryService;
 
-    private Byte CHINESE = 0 ;
+    private Byte ENGLISH = 1;
 
 
-
-    @RequestMapping(value = "/add.do",method = RequestMethod.POST)
-    @ResponseBody
-    public Result addInfomation(@RequestBody InfomationDTO dto,HttpServletRequest request){
-        dealWithDTO(request,dto);
-        infomationService.add(dto);
-        return new Result(true);
-    }
-
-    @RequestMapping(value = "/update.do",method = RequestMethod.POST)
-    @ResponseBody
-    public Result updateInfomation(@RequestBody InfomationDTO dto,HttpServletRequest request){
-        dealWithDTO(request,dto);
-        infomationService.update(dto);
-        return new Result(true);
-    }
 
     @RequestMapping("/index")
     @ResponseBody
     public Result toInfomationIndex(InfomationDTO dto){
+        dto.setLang(ENGLISH);
         PageInfo<InfomationVO> pageInfo = infomationService.queryByPage(dto);
         return new Result(true,pageInfo);
     }
 
-    @RequestMapping(value = "/list",method = RequestMethod.POST)
+    @RequestMapping("/list")
     @ResponseBody
     public Result toInfomationList(@RequestBody InfomationDTO dto){
-        dto.setLang(CHINESE);
+        dto.setLang(ENGLISH);
         PageInfo<InfomationVO> pageInfo = infomationService.queryByPage(dto);
         return new Result(true,pageInfo);
     }
 
     @RequestMapping("/detail")
-    @ResponseBody
     public Result toInfomationDetail(Long id){
         InfomationVO infomationVO = infomationService.queryById(id);
         return new Result(true,infomationVO);
     }
 
-    @RequestMapping(value = "/addMessage",method = RequestMethod.POST)
+    @RequestMapping("/addMessage")
     @ResponseBody
-    public Result addMessage(@RequestBody MessageDTO message, HttpServletRequest request){
+    public Result addMessage(MessageDTO message, String validCode, HttpServletRequest request){
         //验证验证码
-//        Result result = checkValidcode(request, message.getValidCode());
-//        if (result != null){
-//            return result;
-//        }
+        Result result = checkValidcode(request, validCode);
+        if (result != null){
+            return result;
+        }
         //保存留言
         return messageService.add(message);
     }

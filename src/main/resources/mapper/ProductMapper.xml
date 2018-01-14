@@ -10,31 +10,32 @@
 		<result column="price" property="price" jdbcType="DECIMAL"></result>
 		<result column="detail" property="detail" jdbcType="VARCHAR"></result>
 		<result column="series" property="series" jdbcType="TINYINT"></result>
+		<result column="lang" property="lang" jdbcType="TINYINT"></result>
 		<!--共有部分 -->
 		<result column="delete_flag" property="deleteFlag" jdbcType="TINYINT"></result>
-		<result column="create_id" property="creatorId" jdbcType="BIGINT"></result>
+		<result column="create_id" property="createId" jdbcType="BIGINT"></result>
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"></result>
 		<result column="update_id" property="updateId" jdbcType="BIGINT"></result>
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"></result>
 	</resultMap>
 	
 	<sql id="tableName">product</sql>
-	<sql id="baseColumn">id,name,introduction,price,detail,series,delete_flag,create_id,create_time,update_id,update_time</sql>
-	<sql id="noIdColumn">name,introduction,price,detail,series,delete_flag,create_id,create_time,update_id,update_time</sql>
+	<sql id="baseColumn">id,name,introduction,price,detail,series,delete_flag,create_id,create_time,update_id,update_time,lang</sql>
+	<sql id="noIdColumn">name,introduction,price,detail,series,delete_flag,create_id,create_time,update_id,update_time,lang</sql>
 
 
 
 	<insert id="add" parameterType="productDTO" useGeneratedKeys="true" keyProperty="id">
 		insert into <include refid="tableName"></include>
 		(<include refid="noIdColumn"></include>)
-		values(#{name},#{introduction},#{price},#{detail},#{series},0,#{createId},now(),#{updateId},now())
+		values(#{name},#{introduction},#{price},#{detail},#{series},0,#{createId},now(),#{updateId},now(),#{lang})
 	</insert>
 
 
 	<update id="update" parameterType="productDTO">
 		UPDATE <include refid="tableName"></include>
 		set update_time =now()
-		<if test="updateId != null and updateId != ''">
+		<if test="updateId != null">
 			,update_id = #{updateId}
 		</if>
 		<if test="introduction != null and introduction != ''">
@@ -82,6 +83,9 @@
             <if test="endTime != null">
                 and create_time &lt;= #{endTime}
             </if>
+			<if test="lang != null">
+				and lang = #{lang}
+			</if>
 			<if test="id != null">
 				and id = #{id}
 			</if>

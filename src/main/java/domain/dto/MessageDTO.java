@@ -20,6 +20,8 @@ public class MessageDTO extends BaseModel{
      */
     private String message;
 
+    private String validCode;
+
     public String getName() {
         return name;
     }
@@ -50,5 +52,13 @@ public class MessageDTO extends BaseModel{
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getValidCode() {
+        return validCode;
+    }
+
+    public void setValidCode(String validCode) {
+        this.validCode = validCode;
     }
 }

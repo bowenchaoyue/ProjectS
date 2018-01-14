@@ -5,6 +5,7 @@ public class Team extends BaseModel{
     private String title;
     private String profile;
     private String pic;
+    private Byte lang;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class Team extends BaseModel{
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public Byte getLang() {
+        return lang;
+    }
+
+    public void setLang(Byte lang) {
+        this.lang = lang;
     }
 }

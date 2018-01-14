@@ -13,8 +13,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/english/category")
+public class CategoryEController {
 
     @Resource
     private CategoryService categoryService;
