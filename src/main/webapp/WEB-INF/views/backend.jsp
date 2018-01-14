@@ -22,6 +22,21 @@
     <input id="message_add" type="button" value="留言新增">
     <input id="message_search" type="button" value="留言查询">
 
+    <br/>
+    <input id="product_delete" type="button" value="产品删除">
+    <input id="infomation_delete" type="button" value="资讯删除">
+    <input id="message_delete" type="button" value="留言删除">
+    <input id="team_add" type="button" value="成员新增">
+    <input id="team_update" type="button" value="成员更新">
+    <input id="team_search" type="button" value="成员搜索">
+    <input id="team_delete" type="button" value="成员删除">
+    <input id="cooperation_add" type="button" value="合作伙伴新增">
+    <input id="cooperation_update" type="button" value="合作伙伴更新">
+    <input id="cooperation_search" type="button" value="合作伙伴搜索">
+    <input id="cooperation_delete" type="button" value="合作伙伴删除">
+
+
+
 
     <script type="text/javascript" src="../../js/jquery.min.js"></script>
     <script type="text/javascript" src="../../js/backend.js"></script>

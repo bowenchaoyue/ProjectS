@@ -9,6 +9,7 @@ import domain.vo.InfomationVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.CategoryService;
 import service.InfomationService;
@@ -25,16 +26,6 @@ public class InfomationEController extends BaseController{
     @Resource
     private InfomationService infomationService;
 
-    @Resource
-    private MessageService messageService;
-
-    @Resource
-    private CategoryService categoryService;
-
-    private Byte ENGLISH = 1;
-
-
-
     @RequestMapping("/index")
     @ResponseBody
     public Result toInfomationIndex(InfomationDTO dto){
@@ -43,7 +34,7 @@ public class InfomationEController extends BaseController{
         return new Result(true,pageInfo);
     }
 
-    @RequestMapping("/list")
+    @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
     public Result toInfomationList(@RequestBody InfomationDTO dto){
         dto.setLang(ENGLISH);
@@ -52,34 +43,9 @@ public class InfomationEController extends BaseController{
     }
 
     @RequestMapping("/detail")
+    @ResponseBody
     public Result toInfomationDetail(Long id){
         InfomationVO infomationVO = infomationService.queryById(id);
         return new Result(true,infomationVO);
     }
-
-    @RequestMapping("/addMessage")
-    @ResponseBody
-    public Result addMessage(MessageDTO message, String validCode, HttpServletRequest request){
-        //验证验证码
-        Result result = checkValidcode(request, validCode);
-        if (result != null){
-            return result;
-        }
-        //保存留言
-        return messageService.add(message);
-    }
-
-
-    /**
-     * 获取信息类别
-     * @return
-     */
-    @RequestMapping("/getCategory")
-    @ResponseBody
-    public Result getCategory(){
-        Category category = new Category();
-        List<Category> categories = categoryService.queryByPage(category);
-        return new Result(true,categories);
-    }
-
 }

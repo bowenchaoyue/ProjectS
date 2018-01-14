@@ -31,25 +31,6 @@ public class ProductEController {
 
     @Resource
     private SeriesService seriesService;
-
-    /**
-     * 上传图片的
-     * @param file
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/picupload",method = RequestMethod.POST)
-    @ResponseBody
-    public Result picUpload(@RequestParam( value = "projectUpload", required = false ) MultipartFile file,
-                 HttpServletRequest request, HttpServletResponse response){
-     return new Result(true);
-    }
-
-    //验证码的
-    //登录的
-    //拦截的
-
     /**
      * 产品列表
      * @param request
@@ -78,18 +59,5 @@ public class ProductEController {
         dto.setId(id);
         ProductVO productVO = productService.queryById(dto);
         return new Result(true,productVO);
-    }
-
-
-    /**
-     * 获取产品系列
-     * @return
-     */
-    @RequestMapping("/getSeries")
-    @ResponseBody
-    public Result getCategory(){
-        Series series = new Series();
-        List<Series> categories = seriesService.queryByPage(series);
-        return new Result(true,categories);
     }
 }

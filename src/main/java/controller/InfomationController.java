@@ -34,9 +34,6 @@ public class InfomationController extends BaseController{
     @Resource
     private CategoryService categoryService;
 
-    private Byte CHINESE = 0 ;
-
-
 
     @RequestMapping(value = "/add.do",method = RequestMethod.POST)
     @ResponseBody
@@ -51,6 +48,14 @@ public class InfomationController extends BaseController{
     public Result updateInfomation(@RequestBody InfomationDTO dto,HttpServletRequest request){
         dealWithDTO(request,dto);
         infomationService.update(dto);
+        return new Result(true);
+    }
+
+    @RequestMapping(value = "/delete.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteInfomation(@RequestBody InfomationDTO dto,HttpServletRequest request){
+        dealWithDTO(request,dto);
+        infomationService.delete(dto);
         return new Result(true);
     }
 
@@ -87,7 +92,6 @@ public class InfomationController extends BaseController{
         //保存留言
         return messageService.add(message);
     }
-
 
     /**
      * 获取信息类别

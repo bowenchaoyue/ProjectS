@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class BaseController {
@@ -34,6 +35,9 @@ public class BaseController {
     private Map<String,String> keyCodeMap = Maps.newConcurrentMap();
     //记录验证码创建时间
     private Map<String,Date> validCodeTimeMap = Maps.newConcurrentMap();
+
+    public Byte CHINESE = 0;
+    public Byte ENGLISH = 1;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -82,6 +86,9 @@ public class BaseController {
         Cookie cookie = new Cookie(CookieNameConstant.VALIDATE_CODE,validateCodeKey);
         cookie.setPath("/");
         resp.addCookie(cookie);
+
+        clearKeyCodeMap();
+
         keyCodeMap.put(validateCodeKey,validateCode.getValidateCode());
 
         logger.debug("***validCode***："+validateCode.getValidateCode());
@@ -95,6 +102,18 @@ public class BaseController {
         ServletOutputStream sos = resp.getOutputStream();
         ImageIO.write(validateCode.getValidateCodeImg(), "jpeg", sos);
         sos.close();
+    }
+
+    private void clearKeyCodeMap() {
+        if(3 == new Random().nextInt(5)){
+            for(Map.Entry<String,String> entry : keyCodeMap.entrySet()){
+                Date date = validCodeTimeMap.get(entry.getValue());
+                if(validate(date)){
+                    keyCodeMap.remove(entry.getKey());
+                    validCodeTimeMap.remove(entry.getValue());
+                }
+            }
+        }
     }
 
 

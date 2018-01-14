@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import service.MessageService;
 import service.PictureService;
+import service.TeamService;
 import service.UserService;
 import utils.*;
 
@@ -48,6 +49,8 @@ public class BackendController extends BaseController {
 
     @Resource
     private MessageService messageService;
+
+
     /**
      * 登录后的首页
      * @return
@@ -211,7 +214,5 @@ public class BackendController extends BaseController {
         PageInfo<MessageVO> pageInfo = messageService.queryByPage(dto);
         return new Result(true,pageInfo);
     }
-
-
 
 }

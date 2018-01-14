@@ -35,8 +35,6 @@ public class ProductController extends BaseController{
     @Resource
     private SeriesService seriesService;
 
-    private Byte CHINESE = 0;
-
     /**
      * 上传产品的接口
      * @param request
@@ -49,7 +47,6 @@ public class ProductController extends BaseController{
         productService.add(dto);
         return new Result(true);
     }
-
 
     /**
      * 更新产品的接口
@@ -64,27 +61,15 @@ public class ProductController extends BaseController{
         return new Result(true);
     }
 
-
-
-
-
-    /**
-     * 上传图片的
-     * @param file
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/picupload",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete.do",method = RequestMethod.POST)
     @ResponseBody
-    public Result picUpload(@RequestParam( value = "projectUpload", required = false ) MultipartFile file,
-                 HttpServletRequest request, HttpServletResponse response){
-     return new Result(true);
+    public Result deleteProduct(HttpServletRequest request,@RequestBody ProductDTO dto){
+        dealWithDTO(request,dto);
+        productService.delete(dto);
+        return new Result(true);
     }
 
-    //验证码的
-    //登录的
-    //拦截的
+
 
     /**
      * 产品列表
@@ -115,7 +100,6 @@ public class ProductController extends BaseController{
         ProductVO productVO = productService.queryById(dto);
         return new Result(true,productVO);
     }
-
 
     /**
      * 获取产品系列

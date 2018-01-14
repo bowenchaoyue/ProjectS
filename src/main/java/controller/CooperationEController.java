@@ -6,6 +6,7 @@ import domain.Cooperation;
 import domain.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.CooperationService;
 
@@ -20,14 +21,15 @@ public class CooperationEController {
 
     private Byte ENGLISH = 1;
 
-    @RequestMapping("/index")
+    @RequestMapping(value = "/index",method = RequestMethod.POST)
     @ResponseBody
     public Result toCooperationIndex(Cooperation cooperation){
+        cooperation.setLang(ENGLISH);
         PageInfo<Cooperation> pageInfo = cooperationService.queryByPage(cooperation);
         return new Result(true,pageInfo);
     }
 
-    @RequestMapping("/list")
+    @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
     public Result toCooperationList(Cooperation cooperation){
         cooperation.setLang(ENGLISH);
