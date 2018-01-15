@@ -34,7 +34,11 @@
     <input id="cooperation_update" type="button" value="合作伙伴更新">
     <input id="cooperation_search" type="button" value="合作伙伴搜索">
     <input id="cooperation_delete" type="button" value="合作伙伴删除">
-
+    <br/>
+    <input id="product_one" type="button" value="产品单个查询">
+    <input id="infomation_one" type="button" value="单个资讯查询">
+    <input id="message_one" type="button" value="单个留言查询">
+    <input id="cooperation_one" type="button" value="单个合作伙伴查询">
 
 
 

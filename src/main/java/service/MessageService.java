@@ -11,5 +11,7 @@ public interface MessageService {
 
     public PageInfo<MessageVO> queryByPage(MessageDTO dto);
 
+    MessageVO queryById(MessageDTO dto);
+
     Result delete(MessageDTO dto);
 }

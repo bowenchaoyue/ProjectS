@@ -161,6 +161,44 @@ public class BackendController extends BaseController {
         return new Result(true,filePathMap);
     }
 
+
+    @RequestMapping(value = "/picUpload",method = RequestMethod.POST)
+    @ResponseBody
+    public Result picUpload(@RequestParam("file") MultipartFile file,HttpServletRequest req){
+        //模拟登陆
+        User user = new User();
+        user.setId(1L);
+        req.getSession().setAttribute(Constants.SESSION_KEY,user);
+        //模拟登陆
+        String filePath = saveFile(file, req);
+        Map<String,String> filePathMap = Maps.newHashMap();
+        filePathMap.put(file.getOriginalFilename(),filePath);
+        return new Result(true,filePathMap);
+    }
+
+    private String saveFile(MultipartFile file, HttpServletRequest req) {
+        // 判断文件是否为空
+        if (!file.isEmpty()) {
+            try {
+                // 文件保存路径
+                String timeStr = new JDateTime().toString("YYYYMMDDhhmmss");
+                String dirStr = new JDateTime().toString("ss");
+                String filedir = StoreHelper.getPicStorePath()+dirStr;
+                if (!new File(filedir).exists()){
+                    new File(filedir).mkdirs();
+                }
+                String filePath = filedir+File.separator+timeStr+file.getOriginalFilename();
+                // 转存文件
+                file.transferTo(new File(filePath));
+                String urlPath = IpUtil.getHttpAddress()+":8081"+File.separator+dirStr+File.separator+timeStr+file.getOriginalFilename();
+                return urlPath;
+            } catch (Exception e) {
+                logger.error(file.getOriginalFilename()+"上传失败！");
+            }
+        }
+        return null;
+    }
+
     /**
      * 多文件上传
      * @param files
@@ -237,6 +275,15 @@ public class BackendController extends BaseController {
     @ResponseBody
     public Result getMessages(@RequestBody MessageDTO dto){
         PageInfo<MessageVO> pageInfo = messageService.queryByPage(dto);
+        return new Result(true,pageInfo);
+    }
+
+    @RequestMapping("/getMessageDetail")
+    @ResponseBody
+    public Result getMessageDetail(Long id){
+        MessageDTO dto = new MessageDTO();
+        dto.setId(id);
+        MessageVO pageInfo = messageService.queryById(dto);
         return new Result(true,pageInfo);
     }
 

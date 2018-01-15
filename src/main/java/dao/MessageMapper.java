@@ -21,6 +21,8 @@ public interface MessageMapper {
      */
     List<MessageVO> queryByPage(MessageDTO dto);
 
+    MessageVO queryById(MessageDTO dto);
+
     /**
      * 删除留言
      * @param dto

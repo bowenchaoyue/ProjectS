@@ -43,6 +43,10 @@ public class MessageServiceImpl implements MessageService {
         return pageInfo;
     }
 
+    public MessageVO queryById(MessageDTO dto) {
+        return messageMapper.queryById(dto);
+    }
+
     public Result delete(MessageDTO dto) {
          messageMapper.delete(dto);
          return new Result(true);

@@ -37,6 +37,13 @@
 		</if>
 	</update>
 
+	<select id="queryById" parameterType="messageDTO" resultMap="baseResult">
+		SELECT <include refid="baseColumn"/>
+		FROM <include refid="tableName"/>
+		WHERE delete_flag = 0
+		and id = #{id}
+	</select>
+
 	<select id="queryByPage" parameterType="messageDTO" resultMap="baseResult">
 		SELECT <include refid="baseColumn"/>
 		FROM <include refid="tableName"/>

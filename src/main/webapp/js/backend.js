@@ -594,5 +594,42 @@ $(function () {
             }
         });
     })
+    
+    $("#product_one").click(function () {
+        var id = 3;
+        $.get("../product/detail",{id :id},function (rs) {
+            if(rs.success){
+                alert("product one success");
+            }
+        })
+    });
+
+    $("#infomation_one").click(function () {
+        var id = 3;
+        $.get("../infomation/detail",{id :id},function (rs) {
+            if(rs.success){
+                alert("infomation one success");
+            }
+        })
+    });
+
+    $("#message_one").click(function () {
+        var id = 3;
+        $.get("../backend/getMessageDetail",{id :id},function (rs) {
+            if(rs.success){
+                alert("infomation one success");
+            }
+        })
+    });
+
+    $("#cooperation_one").click(function () {
+        var id = 3;
+        $.get("../cooperation/detail",{id :id},function (rs) {
+            if(rs.success){
+                alert("infomation one success");
+            }
+        })
+    });
+
 
 });
