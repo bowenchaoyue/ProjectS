@@ -45,6 +45,9 @@
 		  <if test="deleteFlag != null">
 			  ,delete_flag = #{deleteFlag}
 		  </if>
+		  <if test="lang != null">
+			  ,lang = #{lang}
+		  </if>
 		WHERE  id = #{id}
 	</update>
 
@@ -56,7 +59,7 @@
 			AND id = #{id}
 		</if>
 		<if test="ids != null">
-			AND  id in
+			or  id in
 			<foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
 				#{item}
 			</foreach>

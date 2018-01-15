@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import domain.Cooperation;
 import domain.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +32,7 @@ public class CooperationEController {
 
     @RequestMapping(value = "/list",method = RequestMethod.POST)
     @ResponseBody
-    public Result toCooperationList(Cooperation cooperation){
+    public Result toCooperationList(@RequestBody Cooperation cooperation){
         cooperation.setLang(ENGLISH);
         PageInfo<Cooperation> pageInfo = cooperationService.queryByPage(cooperation);
         return new Result(true,pageInfo);

@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import service.CooperationService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping("/cooperation")
 @Controller
-public class CooperationController {
+public class CooperationController extends BaseController{
 
     @Resource
     private CooperationService cooperationService;
@@ -24,21 +25,24 @@ public class CooperationController {
 
     @RequestMapping("/add.do")
     @ResponseBody
-    public Result addCooperation(@RequestBody Cooperation cooperation){
+    public Result addCooperation(@RequestBody Cooperation cooperation, HttpServletRequest request){
+        dealWithDTO(request,cooperation);
         cooperationService.add(cooperation);
         return new Result(true);
     }
 
     @RequestMapping("/update.do")
     @ResponseBody
-    public Result updateCooperation(@RequestBody Cooperation cooperation){
+    public Result updateCooperation(@RequestBody Cooperation cooperation,HttpServletRequest request){
+        dealWithDTO(request,cooperation);
         cooperationService.update(cooperation);
         return new Result(true);
     }
 
     @RequestMapping("/delete.do")
     @ResponseBody
-    public Result deleteCooperation(@RequestBody Cooperation cooperation){
+    public Result deleteCooperation(@RequestBody Cooperation cooperation,HttpServletRequest request){
+        dealWithDTO(request,cooperation);
         cooperationService.delete(cooperation);
         return new Result(true);
     }

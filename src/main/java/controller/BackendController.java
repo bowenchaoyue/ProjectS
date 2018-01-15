@@ -60,6 +60,31 @@ public class BackendController extends BaseController {
         return "backend";
     }
 
+    @RequestMapping("/start")
+    public String toStart(){
+        return "starter";
+    }
+    @RequestMapping("product")
+    public String toProduct(){
+        return "product";
+    }
+
+    @RequestMapping("infomation")
+    public String toInfomation(){
+        return "infomation";
+    }
+    @RequestMapping("message")
+    public String toMessage(){
+        return "message";
+    }
+    @RequestMapping("cooperation")
+    public String toCooperation(){
+        return "cooperation";
+    }
+    @RequestMapping("team")
+    public String toTeam(){
+        return "team";
+    }
     /**
      * 登录验证接口
      * @param name
@@ -213,6 +238,12 @@ public class BackendController extends BaseController {
     public Result getMessages(@RequestBody MessageDTO dto){
         PageInfo<MessageVO> pageInfo = messageService.queryByPage(dto);
         return new Result(true,pageInfo);
+    }
+
+    @RequestMapping(value = "/delMessage.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Result delMessage(@RequestBody MessageDTO dto){
+        return messageService.delete(dto);
     }
 
 }

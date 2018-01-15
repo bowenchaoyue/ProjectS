@@ -42,4 +42,9 @@ public class MessageServiceImpl implements MessageService {
         PageInfo<MessageVO> pageInfo = new PageInfo<MessageVO>(messageVOS);
         return pageInfo;
     }
+
+    public Result delete(MessageDTO dto) {
+         messageMapper.delete(dto);
+         return new Result(true);
+    }
 }

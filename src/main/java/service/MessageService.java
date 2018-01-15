@@ -10,4 +10,6 @@ public interface MessageService {
     Result add(MessageDTO dto);
 
     public PageInfo<MessageVO> queryByPage(MessageDTO dto);
+
+    Result delete(MessageDTO dto);
 }

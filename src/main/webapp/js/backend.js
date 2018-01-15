@@ -317,12 +317,282 @@ $(function () {
                 }
             }
         });
-
-
+    })
+    
+    //产品删除
+    $("#product_delete").click(function () {
+        var product ={};
+        product.id = 1;
+        product.ids = [];
+        product.ids.push(2);
+        product.ids.push(3);
+        $.ajax({
+            type: "POST",
+            url: "../product/delete.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(product),
+            success: function (rs) {
+                if(rs.success){
+                    alert("product delete success");
+                }
+            }
+        });
     })
 
 
+    //资讯删除
+    $("#infomation_delete").click(function () {
+        var infomation ={};
+        infomation.id = 1;
+        infomation.ids =[];
+        infomation.ids.push(2);
+        infomation.ids.push(3);
+        $.ajax({
+            type: "POST",
+            url: "../infomation/delete.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(infomation),
+            success: function (rs) {
+                if(rs.success){
+                    alert("infomation delete success");
+                }
+            }
+        });
+    });
 
 
+    //留言删除
+    $("#message_delete").click(function () {
+        var message ={};
+        message.id = 1;
+        message.ids =[];
+        message.ids.push(2);
+        message.ids.push(3);
+        $.ajax({
+            type: "POST",
+            url: "../backend/delMessage.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(message),
+            success: function (rs) {
+                if(rs.success){
+                    alert("infomation delete success");
+                }
+            }
+        });
+    })
+
+    
+    $("#team_add").click(function () {
+        var teamName = "成员一";
+        var teamTitle = "成员的title";
+        var teamProfile = "成员Profile";
+        var teamPic ="http://sxxswu.jpg";
+        var team = {};
+        team.name = teamName;
+        team.title = teamTitle;
+        team.profile = teamProfile;
+        team.pic = teamPic;
+        team.lang = 0;
+        $.ajax({
+            type: "POST",
+            url: "../team/add.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(team),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team add success");
+                }
+            }
+        });
+    })
+
+    $("#team_update").click(function () {
+        var teamName = "成员一";
+        var teamTitle = "成员的title";
+        var teamProfile = "成员Profile";
+        var teamPic ="http://sxxswu.jpg";
+        var team = {};
+        team.id = 1;
+        team.name = teamName;
+        team.title = teamTitle;
+        team.profile = teamProfile;
+        team.pic = teamPic;
+        team.lang = 0;
+        $.ajax({
+            type: "POST",
+            url: "../team/update.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(team),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team add success");
+                }
+            }
+        });
+    })
+
+    $("#team_delete").click(function () {
+        var team = {};
+        team.id = 1;
+        team.ids = [];
+        team.ids.push(2);
+        team.ids.push(3);
+
+        $.ajax({
+            type: "POST",
+            url: "../team/delete.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(team),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team delete success");
+                }
+            }
+        });
+    });
+
+    $("#team_search").click(function () {
+        var team = {};
+        team.pageNum = 1;
+        team.pageSize = 5;
+        team.lang = 0;
+
+        $.ajax({
+            type: "POST",
+            url: "../team/list",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(team),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team delete success");
+                }
+            }
+        });
+        team.lang = 1;
+        $.ajax({
+            type: "POST",
+            url: "../english/team/list",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(team),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team delete success");
+                }
+            }
+        });
+    });
+
+    $("#cooperation_add").click(function () {
+        var name = "合作伙伴名称";
+        var type = 1;
+        var profile = "合作伙伴简介";
+        var content ="合作伙伴内容";
+        var cooperation = {};
+        cooperation.name = name;
+        cooperation.profile = profile;
+        cooperation.type = type;
+        cooperation.content = content;
+        cooperation.lang = 0;
+        $.ajax({
+            type: "POST",
+            url: "../cooperation/add.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(cooperation),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team add success");
+                }
+            }
+        });
+    })
+
+    $("#cooperation_update").click(function () {
+        var name = "合作伙伴名称";
+        var type = 1;
+        var profile = "合作伙伴简介";
+        var content ="合作伙伴内容";
+        var cooperation = {};
+        cooperation.name = name;
+        cooperation.profile = profile;
+        cooperation.type = type;
+        cooperation.content = content;
+        cooperation.lang = 0;
+        cooperation.id = 2;
+        $.ajax({
+            type: "POST",
+            url: "../cooperation/update.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(cooperation),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team add success");
+                }
+            }
+        });
+    });
+
+    $("#cooperation_search").click(function () {
+        var cooperation = {};
+        cooperation.pageNum = 1;
+        cooperation.pageSize = 5;
+        cooperation.lang = 0
+
+        $.ajax({
+            type: "POST",
+            url: "../cooperation/list",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(cooperation),
+            success: function (rs) {
+                if(rs.success){
+                    alert("cooperation delete success");
+                }
+            }
+        });
+        cooperation.lang =1;
+        $.ajax({
+            type: "POST",
+            url: "../english/cooperation/list",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(cooperation),
+            success: function (rs) {
+                if(rs.success){
+                    alert("cooperation delete success");
+                }
+            }
+        });
+    })
+
+    $("#cooperation_delete").click(function () {
+        var cooperation = {};
+        cooperation.id = 1;
+        cooperation.ids = [];
+        cooperation.ids.push(2);
+        cooperation.ids.push(3);
+
+        $.ajax({
+            type: "POST",
+            url: "../cooperation/delete.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(cooperation),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team delete success");
+                }
+            }
+        });
+    })
 
 });
