@@ -7,12 +7,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>登录页面</title>
 
-<link href="../../css/main.css" rel="stylesheet" type="text/css" />
+<link href="<%=basePath %>css/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="login">
@@ -37,15 +43,15 @@
     <div class="footer"></div>
 </div>
 
-<script type="text/javascript" src="../../js/jquery.min.js"></script>
-<script type="text/javascript" src="../../js/fun.base.js"></script>
-<script type="text/javascript" src="../../js/script.js"></script>
-<script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="<%=basePath %>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/fun.base.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/script.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/login.js"></script>
 
 
 
 <!--[if IE 6]>
-<script src="../../js/DD_belatedPNG.js" type="text/javascript"></script>
+<script src="<%=basePath %>js/DD_belatedPNG.js" type="text/javascript"></script>
 <script>DD_belatedPNG.fix('.png')</script>
 <![endif]-->
 <%--<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">--%>

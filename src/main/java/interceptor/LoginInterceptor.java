@@ -25,7 +25,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         //不符合条件的，跳转到登录界面
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+//        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        response.sendRedirect("http://localhost:8080/Sian/backend/toLogin");
 
         return false;
     }

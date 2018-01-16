@@ -57,7 +57,7 @@ public class BackendController extends BaseController {
      * @return
      */
     @RequestMapping("/index.do")
-    public String toLogin(){
+    public String toBackend(){
         return "backend";
     }
 
@@ -85,6 +85,12 @@ public class BackendController extends BaseController {
     @RequestMapping("team")
     public String toTeam(){
         return "team";
+    }
+
+
+    @RequestMapping("/toLogin")
+    public String toLogin(){
+        return "login";
     }
     /**
      * 登录验证接口
