@@ -632,4 +632,52 @@ $(function () {
     });
 
 
+    //获取产品分类
+    $("#product_series").click(function () {
+        $.get("../product/getSeries",function (rs) {
+            if(rs.success){
+                alert("success");
+            }else {
+                alert("failed");
+            }
+        })
+    });
+    //获取资讯分类
+    $("#infomation_category").click(function () {
+        $.get("../infomation/getCategory",function (rs) {
+            if(rs.success){
+                alert("success");
+            }else {
+                alert("failed");
+            }
+        })
+    });
+
+    //获取首页图片接口
+    $("#getIndexPic").click(function () {
+        $.post("../backend/getIndexPics",{},function (rs) {
+            if(rs.success){
+                alert("success");
+            }else {
+                alert("failed");
+            }
+        })
+    });
+    //删除图片接口
+    $("#deletePic").click(function () {
+        var picture = {};
+        picture.id = 2;
+        $.ajax({
+            type: "POST",
+            url: "../backend/deletePic.do",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(picture),
+            success: function (rs) {
+                if(rs.success){
+                    alert("team delete success");
+                }
+            }
+        });
+    })
 });

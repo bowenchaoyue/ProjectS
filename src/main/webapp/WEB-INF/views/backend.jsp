@@ -39,6 +39,11 @@
     <input id="infomation_one" type="button" value="单个资讯查询">
     <input id="message_one" type="button" value="单个留言查询">
     <input id="cooperation_one" type="button" value="单个合作伙伴查询">
+    <br/>
+    <input id="product_series" type="button" value="产品系列">
+    <input id="infomation_category" type="button" value="资讯分类">
+    <input id="getIndexPic" type="button" value="获取首页图片">
+    <input id="deletePic" type="button" value="删除图片">
 
 
 

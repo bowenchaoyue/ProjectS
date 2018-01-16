@@ -25,4 +25,11 @@ public interface PictureMapper {
      * @return
      */
     List<Picture> queryByPage(Picture picture);
+
+    /**
+     * 删除图片
+     * @param picture
+     * @return
+     */
+    int delete(Picture picture);
 }

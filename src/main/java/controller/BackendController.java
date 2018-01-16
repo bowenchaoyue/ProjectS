@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -240,7 +241,7 @@ public class BackendController extends BaseController {
                 String filePath = filedir+File.separator+timeStr+file.getOriginalFilename();
                 // 转存文件
                 file.transferTo(new File(filePath));
-                String urlPath = IpUtil.getHttpAddress()+File.separator+dirStr+File.separator+timeStr+file.getOriginalFilename();
+                String urlPath = IpUtil.getHttpAddress()+":8081"+File.separator+dirStr+File.separator+timeStr+file.getOriginalFilename();
                 //保存到图片表里
                 Picture picture = new Picture();
                 picture.setType(type);
@@ -287,10 +288,30 @@ public class BackendController extends BaseController {
         return new Result(true,pageInfo);
     }
 
-    @RequestMapping(value = "/delMessage.do",method = RequestMethod.POST)
+
+    /**
+     * 获取首页轮播图片接口
+     * @return
+     */
+    @RequestMapping("/getIndexPics")
     @ResponseBody
-    public Result delMessage(@RequestBody MessageDTO dto){
-        return messageService.delete(dto);
+    public Result getIndexPics(){
+        Picture picture = new Picture();
+        Byte index = 3;
+        picture.setType(index);
+        List<Picture> pictures= pictureService.query(picture);
+        return new Result(true,pictures);
     }
 
+    /**
+     * 删除图片接口
+     * @return
+     */
+    @RequestMapping(value = "/deletePic.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Result deletePic(@RequestBody Picture picture,HttpServletRequest request){
+        dealWithDTO(request,picture);
+        pictureService.delete(picture);
+        return new Result(true);
+    }
 }

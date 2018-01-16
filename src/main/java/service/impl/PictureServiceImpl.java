@@ -31,4 +31,12 @@ public class PictureServiceImpl implements PictureService {
         PageInfo<Picture> pageInfo = new PageInfo<Picture>(pictures);
         return pageInfo;
     }
+
+    public List<Picture> query(Picture picture) {
+        return pictureMapper.queryByPage(picture);
+    }
+
+    public int delete(Picture picture) {
+        return pictureMapper.delete(picture);
+    }
 }
