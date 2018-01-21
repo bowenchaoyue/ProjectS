@@ -9,7 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
+    String serverName = "47.96.153.197";
     String basePath = request.getScheme() + "://"
+            + serverName + path + "/";
+    String homePath = request.getScheme() + "://"
             + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
 %>
@@ -52,7 +55,7 @@
 
 
 
-    <script type="text/javascript" src="<%=basePath %>js/jquery.min.js"></script>
-    <script type="text/javascript" src="<%=basePath %>js/backend.js"></script>
+    <script type="text/javascript" src="<%=homePath %>js/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=homePath %>js/backend.js"></script>
 </body>
 </html>

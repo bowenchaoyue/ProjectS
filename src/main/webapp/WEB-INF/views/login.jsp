@@ -9,9 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 	String path = request.getContextPath();
+	String serverName = "47.96.153.197";
 	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+			+ serverName + path + "/";
 %>
 <html>
 <head>
@@ -43,7 +43,7 @@
     <div class="footer"></div>
 </div>
 
-<script type="text/javascript" src="<%=basePath %>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/jquery.min.js"></script>
 <script type="text/javascript" src="<%=basePath %>js/fun.base.js"></script>
 <script type="text/javascript" src="<%=basePath %>js/script.js"></script>
 <script type="text/javascript" src="<%=basePath %>js/login.js"></script>

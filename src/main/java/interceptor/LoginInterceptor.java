@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LoginInterceptor implements HandlerInterceptor {
+
+    private String IP = "47.96.153.197";
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         //获取请求的URL
         String url = request.getRequestURI();
@@ -26,7 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         //不符合条件的，跳转到登录界面
 //        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-        response.sendRedirect("http://localhost:8080/Sian/backend/toLogin");
+        response.sendRedirect("http://"+IP+"/Sian/backend/toLogin");
 
         return false;
     }
